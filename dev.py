@@ -5,6 +5,7 @@ import requests
 import pickle
 from datetime import date
 from bs4 import BeautifulSoup
+import time
 
 
 def get_cookies():
@@ -55,6 +56,7 @@ if __name__ == '__main__':
         #     break  # delete
         print('                     ', end='')
         print(f'--- {round((index+1)/len(watchlists) * 100, 2)} % ---', end='\r')
+        time.sleep(1)
         reqw = requests.get("https://markets.ft.com" +
                             watchlist, headers=headers).text
         soup = BeautifulSoup(reqw, "lxml")
@@ -87,6 +89,7 @@ if __name__ == '__main__':
         #     break
         url = "https://markets.ft.com" + \
             funds[fund].replace("summary", 'summary')
+        time.sleep(1)
         reqf = requests.get(url, headers=headers).text
         soup = BeautifulSoup(reqf, "lxml")
         row = [fund, url, '', '', '', '', '', '', '', '','']
@@ -131,7 +134,7 @@ if __name__ == '__main__':
     # quit()  # delete
 
     # Getting Risk.csv
-    f = open('Risk.csv', 'w', newline='')
+    f = open('Risk.csv', 'w', newline='', encoding='utf-8')
     writer = csv.writer(f)
     writer.writerow(['Asset Name', 'Fund ID', 'FT URL', 'Watchlist', 'Benchmark', '1 Yr Alpha Fund', '1 Yr Alpha Cat. Av', '1 Yr Beta Fund ', '1 Yr Beta Cat. Av', '1 Yr IR Fund ', '1 Yr IR Cat. Av', '1 Yr R2 Fund', '1 Yr R2 Cat. Av', '1 Yr Sharpe Fund', '1 Yr Sharpe Cat. Av', '1 Yr SD Fund', '1 Yr SD Cat. Av', '3 Yr Alpha Fund', '3 Yr Alpha Cat. Av', '3 Yr Beta Fund ', '3 Yr Beta Cat. Av',
                     '3 Yr IR Fund ', '3 Yr IR Cat. Av', '3 Yr R2 Fund', '3 Yr R2 Cat. Av', '3 Yr Sharpe Fund', '3 Yr Sharpe Cat. Av', '3 Yr SD Fund', '3 Yr SD Cat. Av', '5 Yr Alpha Fund', '5 Yr Alpha Cat. Av', '5 Yr Beta Fund ', '5 Yr Beta Cat. Av', '5 Yr IR Fund ', '5 Yr IR Cat. Av', '5 Yr R2 Fund', '5 Yr R2 Cat. Av', '5 Yr Sharpe Fund', '5 Yr Sharpe Cat. Av', '5 Yr SD Fund', '5 Yr SD Cat. Av'])
@@ -141,6 +144,7 @@ if __name__ == '__main__':
         # r+=1
         # if r == 10:
         #     break
+        time.sleep(1)
         reqf = requests.get("https://markets.ft.com" +
                             funds[fund].replace("summary", 'risk'), headers=headers).text
         soup = BeautifulSoup(reqf, "lxml")
@@ -162,7 +166,7 @@ if __name__ == '__main__':
         f.flush()
     f.close()
 
-    f = open('Ratings.csv', 'w', newline='')
+    f = open('Ratings.csv', 'w', newline='', encoding='utf-8')
     writer = csv.writer(f)
     writer.writerow(['Asset Name', 'Fund ID', 'FT URL', 'Watchlist', 'Category', 'Morningstar Overal', 'Lipper Overal Total', 'Lipper Overall Consistent', 'Lipper Overal Preservation ', 'Lipper Overall Expense', 'Lipper 3 Yr Total', 'Lipper 3 Yr Consistent',
                     'Lipper 3 Yr Preservation ', 'Lipper 3 Yr Expense', 'Lipper 5 Yr Total', 'Lipper 5 Yr Consistent', 'Lipper 5 Yr Preservation ', 'Lipper 5 Yr Expense', 'Lipper 10 Yr Total', 'Lipper 10 Yr Consistent', 'Lipper 10 Yr Preservation ', 'Lipper 10 Yr Expense'])
@@ -173,6 +177,7 @@ if __name__ == '__main__':
         # r+=1
         # if r == 10:
         #     break
+        time.sleep(1)
         reqf = requests.get("https://markets.ft.com" +
                             funds[fund].replace("summary", 'ratings'), headers=headers).text
         soup = BeautifulSoup(reqf, "lxml")
@@ -215,14 +220,14 @@ if __name__ == '__main__':
     #     fundi[i] = funds[i]
     # funds = fundi
     # funds['FidelityÂ® Select Medical Technology and Devices/Roy'] = '/data/funds/tearsheet/performance?s=FSMEX'
-    f = open('Performance.csv', 'w', newline='')
+    f = open('Performance.csv', 'w', newline='', encoding='utf-8')
     writer = csv.writer(f)
     writer.writerow(['Asset Name', 'Fund ID', 'FT URL', 'Watchlist', '5 Yr Fund %', '3 Yr Fund %', '1 Yr Fund %', '6 Mnth Fund %', '3 Mnth Fund %', '1 Mnth Fund %', 'Category', '5 Yr Cat %', '3 Yr Cat %', '1 Yr Cat %', '6 Mnth Cat %', '3 Mnth Cat %', '1 Mnth Cat %', 'Benchmark', '5 Yr Bench%', '3 Yr Bench %', '1 Yr Bench %', '6 Mnth Bench %', '3 Mnth Bench %', '1 Mnth Bench %', '5 YR Q', '3 YR Q', '1 YR Q', '6 Mnth Q', '3 Mnth Q', '1 Mnth Q',
                     '5 Yr Prior Fund %', '4 Yr Prior Fund %', '3 Yr Prior Fund %', '2 Yr Prior Fund %', '1 Yr Prior Fund %', 'YTD Fund %', '5 Yr Prior Cat %', '4 Year Prior Cat %', '3 Yr Prior Cat %', '2 Yr Prior Cat %', '1 Yr Prior Cat %', 'YTD Cat %', '5 Yr Prior Bench%', '4 Year Prior Bench%', '3 Yr Prior Bench%', '2 Yr Prior Bench%', '1 Yr Prior Bench%', 'YTD Bench%', '5 Yr Prior Q%', '4 Year Prior Q%', '3 Yr Prior Q%', '2 Yr Prior Q%', '1 Yr Prior Q%', 'YTD Q%'])
 
     for fund in funds:
         print(fund, '- performance')
-
+        time.sleep(1)
         reqf = requests.get("https://markets.ft.com" +
                             funds[fund].replace("summary", 'performance'), headers=headers).text
         soup = BeautifulSoup(reqf, "lxml")
@@ -272,6 +277,7 @@ if __name__ == '__main__':
             'chartType': 'annual',
             'symbol': funds[fund].split('=')[-1],
         }
+        time.sleep(1)
         response = requests.get(
             'https://markets.ft.com/data/funds/ajax/trailing-total-returns', headers=headers, params=params)
         dicti = response.json()
